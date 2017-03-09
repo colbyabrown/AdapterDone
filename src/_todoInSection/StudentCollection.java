@@ -1,6 +1,7 @@
 package _todoInSection;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.event.TableModelListener;
@@ -120,6 +121,10 @@ public class StudentCollection implements TableModel {
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
 		return;
+	}
+	
+	public void sort(Comparator<Student> comp) {
+		theStudents.sort(comp);
 	}
 
 }

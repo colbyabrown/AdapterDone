@@ -8,8 +8,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
+
+import model.Student;
 
 @SuppressWarnings("serial")
 public class StudentGUI extends JFrame {
@@ -31,6 +35,8 @@ public class StudentGUI extends JFrame {
   // a class that implements TableModel so this JTable
   // can display rows and columns of data in a graphical manner
   private JTable table = null;
+  
+  private StudentCollection students;
 
   /**
    * The constructor for a StudentTable. Sets up the GUI and the JTable
@@ -42,15 +48,20 @@ public class StudentGUI extends JFrame {
     setSize(700, 140);
     setLocation(30, 30);
 
-    // TODO: 2) Need a new StudentCollection as our model
+   	students = new StudentCollection();
  
-    // TODO: 3) Construct the JTable (table) with our model as an argument (could use setModel)
+    table = new JTable(students);
+    
+    table.setRowSorter(new StudentSorter(students));
+    
+    JScrollPane pane = new JScrollPane(table);
  
     // TODO: 4) Construct a JScrollPane to decorate table so that if the data exceeds the 
     // side of the table in the  GUI, then it automatically becomes scrollable.
     
     // TODO: 5) Add JScrollPane to this JFrame
-   
+    
+    this.add(pane);
     
     // TODO: Run this code to see if the JTable appears (no code to write)
 
@@ -75,12 +86,7 @@ public class StudentGUI extends JFrame {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-      // TODO: 8) Show the name of the student on the currently selected
-      // row need table's getSelectedRow and convertRowIndexToModel as
-      // well as model's getValueAt(rowIndex, columnIndex). See the API
-      // for details.
-      System.out.println("Get student's name from the table");
-
+      System.out.println(students.get(table.getSelectedRow()).getName());
     }
   }
 }
