@@ -3,6 +3,9 @@ package _todoInSection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
 import model.Student;
 
 /**
@@ -16,7 +19,7 @@ import model.Student;
 // (after adding implements TableModel to the class heading).
 //
 // Note: Some TableModel methods need not be implemented.
-public class StudentCollection  {
+public class StudentCollection implements TableModel {
 
   private List<Student> theStudents;
 
@@ -61,5 +64,62 @@ public class StudentCollection  {
     }
     return null; // not found
   }
+
+	@Override
+	public int getRowCount() {
+		return theStudents.size();
+	}
+	
+	@Override
+	public int getColumnCount() {
+		return 4;
+	}
+	
+	@Override
+	public String getColumnName(int columnIndex) {
+		return new String[]{"Name", "Major", "GPA", "Age"}[columnIndex];
+	}
+	
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return new Class[]{String.class, String.class, Double.class, Integer.class}[columnIndex];
+	}
+	
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return false;
+	}
+	
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Student student = theStudents.get(rowIndex);
+		switch (columnIndex) {
+		case 0:
+			return student.getName();
+		case 1:
+			return student.getMajor();
+		case 2:
+			return student.getGPA();
+		case 3:
+			return student.getAge();
+		default:
+			return null;
+		}
+	}
+	
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		return;
+	}
+	
+	@Override
+	public void addTableModelListener(TableModelListener l) {
+		return;
+	}
+	
+	@Override
+	public void removeTableModelListener(TableModelListener l) {
+		return;
+	}
 
 }
